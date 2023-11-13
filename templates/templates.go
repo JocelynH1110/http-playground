@@ -10,7 +10,7 @@ import (
 
 func MustParseTemplate(filename string) *template.Template {
 	path := filepath.Join("templates", filename)
-	tpl, err := template.ParseFiles(path)
+	tpl, err := template.ParseFiles("templates/layout.html", path)
 	if err != nil {
 		panic(err)
 	}

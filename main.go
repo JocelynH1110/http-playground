@@ -34,6 +34,8 @@ func main() {
 	r.Get("/", HomeHandler)
 	r.Get("/contact", ContactHandler)
 	r.Get("/about", AboutUs)
+	fs := http.FileServer(http.Dir("./static"))
+	r.Handle("/static/*", http.StripPrefix("/static/", fs))
 	fmt.Println("Listening on port 3000")
 	http.ListenAndServe(":3000", r) //ListenAndServe裡有個無限迴圈，所以會一直跑到程式結束為止
 }
