@@ -33,6 +33,10 @@ func ShowProduct(db *sqlx.DB) http.HandlerFunc {
 		id := chi.URLParam(r, "id")
 		idInt, _ := strconv.ParseInt(id, 10, 64)
 		product, _ := models.GetProduct(db, idInt)
+		if product == nil {
+			templates.HandleNotFound(w)
+			return
+		}
 		templates.RenderTemplate(w, templates.ShowProductTemplate, showProductAssigns{
 			Product: product,
 		})

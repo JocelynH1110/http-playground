@@ -25,5 +25,8 @@ func ListProducts(db *sqlx.DB) ([]Product, error) {
 func GetProduct(db *sqlx.DB, id int64) (*Product, error) {
 	result := Product{}
 	err := db.Get(&result, "select "+PRODUCT_COLUMNS+" from products where id=$1", id)
+	if err != nil {
+		return nil, err
+	}
 	return &result, err
 }

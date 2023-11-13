@@ -27,5 +27,12 @@ func RenderTemplate(w http.ResponseWriter, tpl *template.Template, data any) {
 	}
 }
 
+func HandleNotFound(w http.ResponseWriter) {
+	w.WriteHeader(http.StatusNotFound)
+	w.Header().Set("content-type", "text/html; charset=utf-8")
+	RenderTemplate(w, NotFoundTemplate, nil)
+}
+
+var NotFoundTemplate = MustParseTemplate("errors/404.html")
 var IndexTemplate = MustParseTemplate("index.html")
 var ShowProductTemplate = MustParseTemplate("products/show.html")
