@@ -8,6 +8,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/jmoiron/sqlx"
+	"github.com/jocelynh1110/http-playground/controllers"
 	"github.com/jocelynh1110/http-playground/templates"
 	_ "github.com/lib/pq"
 )
@@ -25,13 +26,13 @@ func AboutUs(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	_, err := sqlx.Connect("postgres", "postgres://postgres:postgres@127.0.0.1:5432/catalog_dev")
+	db, err := sqlx.Connect("postgres", "postgres://postgres:postgres@127.0.0.1:5432/catalog_dev")
 	if err != nil {
 		log.Fatalln(err)
 	}
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
-	r.Get("/", HomeHandler)
+	r.Get("/", controllers.ProductIndex(db))
 	r.Get("/contact", ContactHandler)
 	r.Get("/about", AboutUs)
 	fs := http.FileServer(http.Dir("./static"))
