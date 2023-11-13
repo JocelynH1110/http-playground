@@ -8,11 +8,12 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/jmoiron/sqlx"
+	"github.com/jocelynh1110/http-playground/templates"
 	_ "github.com/lib/pq"
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "aloha")
+	templates.RenderTemplate(w, templates.IndexTemplate, nil)
 }
 
 func ContactHandler(w http.ResponseWriter, r *http.Request) {
