@@ -2,7 +2,9 @@
 <h2>Products</h2>
 <ul>
     {{range .Products}}
-    <li>{{.Name}} - NT${{.Price}}</li>
+    <li>
+        <a href="/products/{{.ID}}">{{.Name}} - NT${{.Price}}</a>
+    </li>
     {{end}}
 </ul>
 {{end}}
