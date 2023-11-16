@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -41,4 +43,32 @@ func ShowProduct(db *sqlx.DB) http.HandlerFunc {
 			Product: product,
 		})
 	}
+}
+
+func NewProduct(w http.ResponseWriter, r *http.Request) {
+	templates.RenderTemplate(w, templates.NewProductTemplate, nil)
+}
+
+func CreateProduct(db *sqlx.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		err := r.ParseForm()
+
+		if err != nil {
+			log.Println(err)
+			w.WriteHeader(http.StatusBadRequest)
+			fmt.Fprintln(w, "Bad Request")
+			return
+		}
+		name := r.Form.Get("name")
+		price := r.Form.Get("price")
+		priceInt, _ := strconv.ParseInt(price, 10, 32)
+		product, err := models.InsertProduct(db, name, int32(priceInt))
+		if err != nil {
+			log.Println(err)
+		}
+		log.Println(product)
+		url := fmt.Sprintf("/products/%d", product.ID)
+		http.Redirect(w, r, url, http.StatusMovedPermanently)
+	}
+
 }

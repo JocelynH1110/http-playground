@@ -33,6 +33,8 @@ func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Get("/", controllers.ProductIndex(db))
+	r.Get("/products/new", controllers.NewProduct)
+	r.Post("/products", controllers.CreateProduct(db))
 	r.Get("/products/{id}", controllers.ShowProduct(db))
 	r.Get("/contact", ContactHandler)
 	r.Get("/about", AboutUs)

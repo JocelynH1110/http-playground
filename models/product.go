@@ -1,6 +1,7 @@
 package models
 
 import (
+	"log"
 	"time"
 
 	"github.com/jmoiron/sqlx"
@@ -29,4 +30,14 @@ func GetProduct(db *sqlx.DB, id int64) (*Product, error) {
 		return nil, err
 	}
 	return &result, err
+}
+
+func InsertProduct(db *sqlx.DB, name string, price int32) (*Product, error) {
+	result := Product{}
+	err := db.QueryRowx("insert into products (name,price) values ($1,$2) returning "+PRODUCT_COLUMNS, name, price).StructScan(&result)
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+	return &result, nil
 }

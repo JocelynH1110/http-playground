@@ -1,0 +1,14 @@
+{{define "content"}}
+<h2>New Product</h2>
+<form action="/products" method="post">
+    <label class="field">
+        <span>Name</span>
+        <input name="name" />
+    </label>
+    <label class="field">
+        <span>Price</span>
+        <input name="price" />
+    </label>
+    <button type="submit">Submit</button>
+</form>
+{{end}}

@@ -36,3 +36,4 @@ func HandleNotFound(w http.ResponseWriter) {
 var NotFoundTemplate = MustParseTemplate("errors/404.html")
 var IndexTemplate = MustParseTemplate("index.html")
 var ShowProductTemplate = MustParseTemplate("products/show.html")
+var NewProductTemplate = MustParseTemplate("products/form.html")
